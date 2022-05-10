@@ -11,11 +11,10 @@ let randomUsers = (amount) => {
     fakeUrlImage = faker.image.avatar(),
     fakeDateOfRegister = faker.date.future(),
     fakeStatus = status[Math.floor(Math.random() * 4)]
-    //profile= 2
+
     userList.push(fakeId, fakeFullName, fakeUrlImage, fakeDateOfRegister, fakeStatus)
   }
   return userList;
 }
-//console.log(userList)
 
 module.exports = randomUsers;
