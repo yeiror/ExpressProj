@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const express = require('express');
 const user = require('../model/user.model');
+const mockUser = require('../mocking/userslists');
 
 const router = express.Router();
 
@@ -22,6 +23,8 @@ router.get('/', async (req, res) => {
   try {
     const userDB = await user.find();
     res.json(userDB);
+
+
   } catch (error) {
     return res.status(400).json({
       mensaje: 'Ocurrió un error',

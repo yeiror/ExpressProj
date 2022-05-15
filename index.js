@@ -5,26 +5,30 @@ const path = require('path');
 const mongoose = require('mongoose');
 const history = require('connect-history-api-fallback');
 const routerApi = require('./routes');
+let mockUser = require('./mocking/userslists.js');
+require('dotenv').config();
 
 const app = express();
-const port = 3000;
 
-// Conexión base de datos
-
-const uri = 'URI';
-const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
 // Or using promises
-mongoose.connect(uri, options).then(
-  /** ready to use. The `mongoose.connect()` promise resolves to mongoose instance. */
+/* mongoose.connect(process.env.URI, process.env.OPTIONS).then(
+   ready to use. The `mongoose.connect()` promise resolves to mongoose instance.
   () => {
     console.log('Conectado a DB');
   },
-  /** handle initial connection error */
+  handle initial connection error
   (err) => {
     console.log(err);
   },
 );
+*/
+mongoose.connect(process.env.URI).then(
+  () => { console.log('conectado a la DB');}
+).catch(
+  (err) => { console.log(err);}
+)
+
 
 if (process.env.NODE_ENV === 'production') {
   // Definir un directorio estático
@@ -46,6 +50,7 @@ app.use(
 
 app.get('/', (req, res) => {
   res.send('HEllooo to my new server');
+  console.log(mockUser(15));
 });
 
 routerApi(app);
@@ -54,6 +59,6 @@ routerApi(app);
 app.use(history());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(port, () => {
-  console.log(`App ejemplo corriendo por el puerto: ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`App ejemplo corriendo por el puerto: ${process.env.PORT}`);
 });
